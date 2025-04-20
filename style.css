@@ -1,0 +1,54 @@
+:root {
+    --orange-gradient: linear-gradient(135deg, #ff8a00, #e65c00);
+    --black-bg: #000;
+    --white: #fff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--black-bg);
+    color: var(--white);
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+  }
+  a { text-decoration: none; color: var(--white); }
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--orange-gradient);
+    border-radius: 4px;
+    font-weight: bold;
+    transition: opacity .2s;
+  }
+  .btn:hover { opacity: 0.8; }
+  .section { padding: 4rem 2rem; }
+  .container { max-width: 1024px; margin: 0 auto; }
+  .text-gradient {
+    background: var(--orange-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.btn.glow {
+  box-shadow: 0 0 16px 4px #ff8a00cc;
+  transition: box-shadow 0.3s;
+}
+.btn.glow:hover {
+  box-shadow: 0 0 32px 8px #ff8a00ee;
+}
