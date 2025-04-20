@@ -200,12 +200,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize on load and resize
     initPixels();
-    handleAnimation("appear"); // Start with pixels visible
+    // DO NOT automatically start the animation - wait for hero reveal
+    // handleAnimation("appear"); <- This line was causing the pre-show issue
+    
+    // Clear the canvas initially to ensure no artifacts
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Store animation trigger in window for access from terminal reveal code
+    window.triggerPixelEffect = () => {
+      handleAnimation("appear");
+    };
 
     // Handle window resize
     const resizeObserver = new ResizeObserver(() => {
       initPixels();
-      handleAnimation("appear");
+      
+      // Only re-trigger animation if hero is already visible
+      if (document.getElementById('hero').style.opacity === '1') {
+        handleAnimation("appear");
+      } else {
+        // Clear canvas on resize while waiting for reveal
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
     });
     
     resizeObserver.observe(container);
@@ -213,6 +235,129 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Call the pixel card effect initialization
   initPixelCardEffect();
+
+  // Project Modal Functionality
+  const initProjectModals = () => {
+    const modal = document.getElementById('project-modal');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const modalContainer = document.getElementById('modal-container');
+    const modalClose = document.getElementById('modal-close');
+    const modalImage = document.getElementById('modal-image');
+    const modalTitle = document.getElementById('modal-title');
+    const modalTechBadges = document.getElementById('modal-tech-badges');
+    const modalDescription = document.getElementById('modal-description');
+    const modalTechStack = document.getElementById('modal-tech-stack');
+    const modalImpact = document.getElementById('modal-impact');
+    const modalLink = document.getElementById('modal-link');
+    
+    if (!modal) return;
+    
+    // Make all project cards clickable
+    document.querySelectorAll('.project-lens-card').forEach(card => {
+      card.style.cursor = 'pointer';
+      
+      card.addEventListener('click', (e) => {
+        // Don't open modal if clicking on a link or button inside the card
+        if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || 
+            e.target.closest('a') || e.target.closest('button')) {
+          return;
+        }
+        
+        // Get project data from card
+        const imgSrc = card.querySelector('.project-img')?.src || '';
+        const title = card.querySelector('h2, h3')?.textContent || 'Project Details';
+        const description = card.querySelector('p')?.textContent || 'No description available.';
+        
+        // Get tech stack - either from tech-badges or from text content with "Tech Stack:" label
+        let techStack = '';
+        const techBadgesContainer = card.querySelector('.tech-badges');
+        if (techBadgesContainer) {
+          const techBadges = Array.from(techBadgesContainer.querySelectorAll('.tech-badge'));
+          techStack = techBadges.map(badge => badge.textContent).join(', ');
+        } else {
+          const techStackEl = Array.from(card.querySelectorAll('.text-xs')).find(el => 
+            el.textContent?.includes('Tech Stack:')
+          );
+          if (techStackEl) {
+            techStack = techStackEl.textContent.replace('Tech Stack:', '').trim();
+          }
+        }
+        
+        // Get impact information
+        const impactEl = Array.from(card.querySelectorAll('.text-xs, .mb-2')).find(el => 
+          el.textContent?.includes('Impact:')
+        );
+        const impact = impactEl ? 
+          impactEl.textContent.replace('Impact:', '').trim() : 
+          'Information not available.';
+        
+        // Get project tag if available
+        const tag = card.querySelector('.absolute.top-4.right-4')?.textContent || '';
+        
+        // Get any link in the card
+        const link = card.querySelector('a')?.href || '#';
+        
+        // Populate modal with project data
+        modalImage.src = imgSrc;
+        modalImage.alt = title;
+        modalTitle.textContent = title;
+        modalDescription.textContent = description;
+        modalTechStack.textContent = techStack;
+        modalImpact.textContent = impact;
+        modalLink.href = link;
+        
+        // Create tech badges in modal
+        modalTechBadges.innerHTML = '';
+        const technologies = techStack.split(', ').filter(tech => tech.trim());
+        technologies.forEach(tech => {
+          if (!tech.trim()) return;
+          
+          const badge = document.createElement('span');
+          badge.className = 'bg-orange-500/80 text-white text-xs font-mono px-3 py-1 rounded-full shadow';
+          badge.textContent = tech.trim();
+          modalTechBadges.appendChild(badge);
+        });
+        
+        // Show modal with animation
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        
+        // Animate modal appearance
+        setTimeout(() => {
+          modalContainer.style.opacity = '1';
+          modalContainer.style.transform = 'scale(1)';
+        }, 10);
+        
+        // Prevent body scrolling when modal is open
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    
+    // Close modal on overlay click
+    modalOverlay.addEventListener('click', closeModal);
+    
+    // Close modal on close button click
+    modalClose.addEventListener('click', closeModal);
+    
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+    
+    function closeModal() {
+      modalContainer.style.opacity = '0';
+      modalContainer.style.transform = 'scale(0.9)';
+      
+      setTimeout(() => {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }, 300);
+    }
+  };
+  
+  // Initialize project modals
+  initProjectModals();
 
   // Smooth scrolling for navbar links
   document.querySelectorAll('.nav-link').forEach(link => {
@@ -520,7 +665,11 @@ document.addEventListener('DOMContentLoaded', () => {
             onStart: () => {
               heroSection.style.pointerEvents = 'auto';
               heroSection.style.visibility = 'visible';
-              // Trigger hero reveal animation if any
+              // Trigger pixel effect only after hero section is revealed
+              if (window.triggerPixelEffect) {
+                window.triggerPixelEffect();
+              }
+              // Trigger hero reveal animation if any other effects exist
               if (typeof window.heroRevealEffect === 'function') window.heroRevealEffect();
             }
           });

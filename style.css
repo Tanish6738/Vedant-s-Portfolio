@@ -78,6 +78,51 @@ a {
   box-shadow: 0 0 32px 8px #ff8a00ee;
 }
 
+/* Project Modal Styles */
+#project-modal {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#project-modal.flex {
+  opacity: 1;
+}
+
+#modal-container {
+  transform-origin: center;
+}
+
+#modal-close:hover svg {
+  transform: rotate(90deg);
+  transition: transform 0.3s ease;
+}
+
+#modal-tech-badges {
+  gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  #modal-container {
+    max-height: 85vh;
+    margin: 0 0.75rem;
+  }
+  
+  #modal-container .flex-col.md\:flex-row {
+    flex-direction: column !important;
+  }
+  
+  #modal-image {
+    height: 180px !important;
+    border-radius: 0.75rem 0.75rem 0 0 !important;
+  }
+  
+  #modal-container .w-full.md\:w-1\/2 {
+    width: 100% !important;
+  }
+}
+
+/* End Project Modal Styles */
+
 @media (max-width: 768px) {
   .project-lens-card {
     padding: 0 !important;

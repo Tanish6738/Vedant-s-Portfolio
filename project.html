@@ -236,6 +236,41 @@
   </footer>
   <script src="script.js"></script>
   <script src="click-spark.js"></script>
+  
+  <!-- Project Detail Modal -->
+  <div id="project-modal" class="fixed inset-0 z-[999] hidden flex items-center justify-center">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-md" id="modal-overlay"></div>
+    <div class="bg-zinc-900 rounded-xl border border-orange-500 shadow-2xl w-full max-w-4xl mx-4 md:mx-auto max-h-[90vh] overflow-y-auto relative z-10 transform transition-all duration-300 scale-90 opacity-0" id="modal-container">
+      <div class="absolute top-4 right-4">
+        <button id="modal-close" class="text-zinc-400 hover:text-white bg-zinc-800 hover:bg-orange-500 rounded-full p-2 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="flex flex-col md:flex-row">
+        <div class="w-full md:w-1/2 h-64 md:h-auto">
+          <img id="modal-image" src="" alt="Project image" class="w-full h-full object-cover md:rounded-tl-xl md:rounded-bl-xl">
+        </div>
+        <div class="w-full md:w-1/2 p-6">
+          <h2 id="modal-title" class="text-2xl font-bold mb-2 text-gradient bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent"></h2>
+          <div id="modal-tech-badges" class="flex flex-wrap gap-2 mb-4"></div>
+          <p id="modal-description" class="text-zinc-200 mb-4"></p>
+          <div class="mb-3">
+            <h3 class="text-orange-400 font-semibold mb-1">Tech Stack</h3>
+            <p id="modal-tech-stack" class="text-zinc-300"></p>
+          </div>
+          <div class="mb-3">
+            <h3 class="text-orange-400 font-semibold mb-1">Impact</h3>
+            <p id="modal-impact" class="text-zinc-300"></p>
+          </div>
+          <div class="mt-6">
+            <a id="modal-link" href="#" class="inline-block px-6 py-2 bg-gradient-to-r from-orange-400 to-orange-600 text-white font-bold rounded-full shadow-lg hover:scale-105 active:scale-95 transition-transform duration-200">See Project Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

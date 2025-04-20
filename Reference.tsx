@@ -1,7 +1,4 @@
 "use client";
-import React, { useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-
 export const Lens = ({
   children,
   zoomFactor = 1.5,
