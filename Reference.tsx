@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import React, { useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
@@ -32,11 +32,31 @@ export const Lens = ({
     <div
       ref={containerRef}
       className="relative overflow-hidden rounded-lg z-20"
+      style={{ touchAction: 'none' }}
       onMouseEnter={() => {
         setIsHovering(true);
       }}
       onMouseLeave={() => setIsHovering(false)}
-      onMouseMove={handleMouseMove}>
+      onMouseMove={handleMouseMove}
+      onTouchStart={e => {
+        setIsHovering(true);
+        if (e.touches && e.touches.length > 0) {
+          const rect = e.currentTarget.getBoundingClientRect();
+          const x = e.touches[0].clientX - rect.left;
+          const y = e.touches[0].clientY - rect.top;
+          setMousePosition({ x, y });
+        }
+      }}
+      onTouchMove={e => {
+        if (e.touches && e.touches.length > 0) {
+          const rect = e.currentTarget.getBoundingClientRect();
+          const x = e.touches[0].clientX - rect.left;
+          const y = e.touches[0].clientY - rect.top;
+          setMousePosition({ x, y });
+        }
+      }}
+      onTouchEnd={() => setIsHovering(false)}
+    >
       {children}
       {isStatic ? (
         <div>
@@ -86,6 +106,7 @@ export const Lens = ({
                   }px, black 100%, transparent 100%)`,
                   transformOrigin: `${mousePosition.x}px ${mousePosition.y}px`,
                   zIndex: 50,
+                  pointerEvents: 'none',
                 }}>
                 <div
                   className="absolute inset-0"

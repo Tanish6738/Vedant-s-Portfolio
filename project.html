@@ -37,19 +37,31 @@
     </ul>
   </nav>
   <!-- Hero Section -->
-  <section class="min-h-[40vh] flex items-center justify-center text-center bg-gradient-to-br from-orange-500 to-orange-700 relative overflow-hidden rounded-2xl shadow-2xl border border-zinc-800 mx-2 my-8 bg-black/80 backdrop-blur">
+  <section class="min-h-[50vh] flex flex-col md:flex-row items-center justify-center text-center bg-gradient-to-br from-orange-500 to-orange-700 relative overflow-hidden rounded-2xl shadow-2xl border border-zinc-800 mx-2 my-8 bg-black/80 backdrop-blur">
     <div class="absolute -top-32 -left-32 w-96 h-96 bg-orange-400 opacity-30 rounded-full blur-3xl animate-pulse"></div>
     <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-orange-700 opacity-30 rounded-full blur-3xl animate-pulse"></div>
-    <div class="container mx-auto px-4 relative z-10">
-      <h1 class="text-5xl md:text-7xl font-extrabold mb-4 bg-gradient-to-r from-white via-orange-200 to-orange-600 bg-clip-text text-transparent drop-shadow-lg tracking-tight flex items-center justify-center">
-        <svg class="w-10 h-10 mr-3 text-orange-400 animate-spin-slow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-dasharray="60 20"/></svg>
-        Projects
-      </h1>
-      <p class="text-xl md:text-2xl text-orange-100 font-medium max-w-2xl mx-auto">A showcase of impactful backend solutions, crafted with performance, scalability, and clean code in mind.</p>
+    <div class="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center gap-10">
+      <div class="flex-1 flex flex-col items-center md:items-start text-center md:text-left">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-4 drop-shadow-lg tracking-tight flex items-center justify-center md:justify-start">
+          <svg class="w-10 h-10 mr-3 text-orange-400 animate-spin-slow" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-dasharray="60 20"/></svg>
+          Projects
+        </h1>
+        <p class="text-xl md:text-2xl text-orange-100 font-medium max-w-2xl mb-6">A showcase of impactful backend solutions, crafted with performance, scalability, and clean code in mind.</p>
+        <div class="flex flex-wrap gap-3 justify-center md:justify-start mb-4">
+          <span class="bg-orange-500/80 text-white text-xs font-mono px-3 py-1 rounded-full shadow">#Java</span>
+          <span class="bg-orange-500/80 text-white text-xs font-mono px-3 py-1 rounded-full shadow">#SpringBoot</span>
+          <span class="bg-orange-500/80 text-white text-xs font-mono px-3 py-1 rounded-full shadow">#Microservices</span>
+          <span class="bg-orange-500/80 text-white text-xs font-mono px-3 py-1 rounded-full shadow">#Fintech</span>
+        </div>
+        <a href="#projects-list" class="btn glow mt-2">Explore Projects</a>
+      </div>
+      <div class="flex-1 flex justify-center md:justify-end">
+        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Projects Hero" class="rounded-2xl shadow-2xl w-80 h-64 object-cover border-4 border-orange-400"/>
+      </div>
     </div>
   </section>
   <!-- Projects Grid -->
-  <section class="py-16">
+  <section id="projects-list" class="py-16">
     <div class="container mx-auto px-4">
       <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
         <!-- Project 1 -->
@@ -60,11 +72,20 @@
             <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
           </div>
           <div class="p-6">
+            <div class="tech-badges mb-2">
+              <span class="tech-badge">Spring Boot</span>
+              <span class="tech-badge">MySQL</span>
+              <span class="tech-badge">Docker</span>
+              <span class="tech-badge">AWS EC2</span>
+            </div>
             <h2 class="text-2xl font-bold mb-2 text-gradient bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">E‑commerce Order Management System</h2>
             <p class="mb-2 text-zinc-200">Architected a suite of Spring Boot microservices to manage orders, inventory, and payments.</p>
-            <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Tech Stack:</span> Spring Boot, MySQL, Docker, AWS EC2</div>
             <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Impact:</span> Reduced order‑processing latency by 35% and scaled to handle 10,000+ daily orders.</div>
             <span class="absolute top-4 right-4 bg-orange-500/90 text-white text-xs font-mono px-3 py-1 rounded-full shadow-lg animate-fade-in-up">#Microservices</span>
+            <div class="project-footer mt-3">
+              <a href="#" class="project-link">View Code</a>
+              <a href="#" class="project-link">Live Demo</a>
+            </div>
           </div>
         </div>
         <!-- Project 2 -->
@@ -75,11 +96,20 @@
             <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
           </div>
           <div class="p-6">
+            <div class="tech-badges mb-2">
+              <span class="tech-badge">Java EE</span>
+              <span class="tech-badge">JAX-RS</span>
+              <span class="tech-badge">JWT</span>
+              <span class="tech-badge">PostgreSQL</span>
+            </div>
             <h2 class="text-2xl font-bold mb-2 text-gradient bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Fintech Wallet Integration</h2>
             <p class="mb-2 text-zinc-200">Built secure Java EE endpoints for a digital wallet integration in a banking app.</p>
-            <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Tech Stack:</span> Java EE, JAX‑RS, JWT, PostgreSQL</div>
             <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Impact:</span> Onboarded over 50,000 users and maintained 99.9% uptime in the first quarter.</div>
             <span class="absolute top-4 right-4 bg-orange-500/90 text-white text-xs font-mono px-3 py-1 rounded-full shadow-lg animate-fade-in-up">#Fintech</span>
+            <div class="project-footer mt-3">
+              <a href="#" class="project-link">View Code</a>
+              <a href="#" class="project-link">Live Demo</a>
+            </div>
           </div>
         </div>
         <!-- Project 3 -->
@@ -90,11 +120,91 @@
             <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
           </div>
           <div class="p-6">
+            <div class="tech-badges mb-2">
+              <span class="tech-badge">Spring Boot</span>
+              <span class="tech-badge">MongoDB</span>
+              <span class="tech-badge">Apache Kafka</span>
+            </div>
             <h2 class="text-2xl font-bold mb-2 text-gradient bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Healthcare Appointment Scheduler</h2>
             <p class="mb-2 text-zinc-200">Developed a real‑time scheduling backend using Spring and Kafka for doctor‑patient appointments.</p>
-            <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Tech Stack:</span> Spring Boot, MongoDB, Apache Kafka</div>
             <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Impact:</span> Improved scheduling efficiency by 50%, supporting 10,000+ daily bookings.</div>
             <span class="absolute top-4 right-4 bg-orange-500/90 text-white text-xs font-mono px-3 py-1 rounded-full shadow-lg animate-fade-in-up">#Healthcare</span>
+            <div class="project-footer mt-3">
+              <a href="#" class="project-link">View Code</a>
+              <a href="#" class="project-link">Live Demo</a>
+            </div>
+          </div>
+        </div>
+        <!-- Project 4 -->
+        <div class="relative group project-lens-card overflow-hidden rounded-xl shadow-2xl border border-orange-500/20 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black p-0 transition-transform duration-300">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600 opacity-70 z-10"></div>
+          <div class="relative lens-img-container cursor-zoom-in">
+            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="IoT Device Manager" class="project-img block w-full h-48 object-cover transition-transform duration-300"/>
+            <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
+          </div>
+          <div class="p-6">
+            <div class="tech-badges mb-2">
+              <span class="tech-badge">Node.js</span>
+              <span class="tech-badge">MQTT</span>
+              <span class="tech-badge">MongoDB</span>
+              <span class="tech-badge">AWS IoT</span>
+            </div>
+            <h2 class="text-2xl font-bold mb-2 text-gradient bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">IoT Device Management Platform</h2>
+            <p class="mb-2 text-zinc-200">Engineered a scalable backend for managing and monitoring thousands of IoT devices in real time.</p>
+            <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Impact:</span> Enabled seamless device onboarding and reduced downtime by 40%.</div>
+            <span class="absolute top-4 right-4 bg-orange-500/90 text-white text-xs font-mono px-3 py-1 rounded-full shadow-lg animate-fade-in-up">#IoT</span>
+            <div class="project-footer mt-3">
+              <a href="#" class="project-link">View Code</a>
+              <a href="#" class="project-link">Live Demo</a>
+            </div>
+          </div>
+        </div>
+        <!-- Project 5 -->
+        <div class="relative group project-lens-card overflow-hidden rounded-xl shadow-2xl border border-orange-500/20 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black p-0 transition-transform duration-300">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600 opacity-70 z-10"></div>
+          <div class="relative lens-img-container cursor-zoom-in">
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Analytics Dashboard" class="project-img block w-full h-48 object-cover transition-transform duration-300"/>
+            <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
+          </div>
+          <div class="p-6">
+            <div class="tech-badges mb-2">
+              <span class="tech-badge">React</span>
+              <span class="tech-badge">D3.js</span>
+              <span class="tech-badge">WebSocket</span>
+              <span class="tech-badge">PostgreSQL</span>
+            </div>
+            <h2 class="text-2xl font-bold mb-2 text-gradient bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Real-Time Analytics Dashboard</h2>
+            <p class="mb-2 text-zinc-200">Developed a dashboard for visualizing live business metrics and KPIs with interactive charts.</p>
+            <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Impact:</span> Empowered business teams with instant insights, improving decision speed by 60%.</div>
+            <span class="absolute top-4 right-4 bg-orange-500/90 text-white text-xs font-mono px-3 py-1 rounded-full shadow-lg animate-fade-in-up">#Analytics</span>
+            <div class="project-footer mt-3">
+              <a href="#" class="project-link">View Code</a>
+              <a href="#" class="project-link">Live Demo</a>
+            </div>
+          </div>
+        </div>
+        <!-- Project 6 -->
+        <div class="relative group project-lens-card overflow-hidden rounded-xl shadow-2xl border border-orange-500/20 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black p-0 transition-transform duration-300">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600 opacity-70 z-10"></div>
+          <div class="relative lens-img-container cursor-zoom-in">
+            <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3b41?auto=format&fit=crop&w=400&q=80" alt="Chatbot Platform" class="project-img block w-full h-48 object-cover transition-transform duration-300"/>
+            <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
+          </div>
+          <div class="p-6">
+            <div class="tech-badges mb-2">
+              <span class="tech-badge">Python</span>
+              <span class="tech-badge">FastAPI</span>
+              <span class="tech-badge">Rasa</span>
+              <span class="tech-badge">Redis</span>
+            </div>
+            <h2 class="text-2xl font-bold mb-2 text-gradient bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Conversational AI Chatbot Platform</h2>
+            <p class="mb-2 text-zinc-200">Built a multi-channel chatbot platform for customer support automation and lead generation.</p>
+            <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Impact:</span> Automated 70% of support queries and increased lead capture by 30%.</div>
+            <span class="absolute top-4 right-4 bg-orange-500/90 text-white text-xs font-mono px-3 py-1 rounded-full shadow-lg animate-fade-in-up">#AI #Chatbot</span>
+            <div class="project-footer mt-3">
+              <a href="#" class="project-link">View Code</a>
+              <a href="#" class="project-link">Live Demo</a>
+            </div>
           </div>
         </div>
       </div>

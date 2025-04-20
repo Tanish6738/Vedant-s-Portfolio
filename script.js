@@ -182,22 +182,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Lens hover effect for project cards
-  function lensEffect(container) {
-    const img = container.querySelector('.project-img');
-    const lens = container.querySelector('.lens-effect');
-    if (!img || !lens) return;
+  // Remove old lensEffect for image only
+  // Add new lens effect for the whole card with zoomed content
+  function lensEffectCard(card) {
+    const lens = card.querySelector('.lens-effect');
+    if (!lens) return;
     const zoom = 1.6;
-    const lensSize = 120;
-    lens.style.display = 'none';
-    container.addEventListener('mousemove', (e) => {
-      const rect = img.getBoundingClientRect();
+    const lensSize = 160;
+    let lensContent = null;
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       lens.style.display = 'block';
-      lens.style.background = `url('${img.src}')`;
-      lens.style.backgroundSize = `${img.width * zoom}px ${img.height * zoom}px`;
-      lens.style.backgroundPosition = `-${x * zoom - lensSize / 2}px -${y * zoom - lensSize / 2}px`;
       lens.style.width = lens.style.height = lensSize + 'px';
       lens.style.borderRadius = '50%';
       lens.style.left = (x - lensSize / 2) + 'px';
@@ -207,12 +205,46 @@ document.addEventListener('DOMContentLoaded', () => {
       lens.style.transition = 'none';
       lens.style.pointerEvents = 'none';
       lens.style.zIndex = 20;
+      lens.style.overflow = 'hidden';
+      lens.style.background = '';
+      lens.style.backdropFilter = '';
+      lens.style.backgroundColor = '';
+
+      // Clone card content into lens only once
+      if (!lensContent) {
+        lens.innerHTML = '';
+        lensContent = card.cloneNode(true);
+        // Remove the lens-effect from the clone to avoid recursion
+        const innerLens = lensContent.querySelector('.lens-effect');
+        if (innerLens) innerLens.remove();
+        lensContent.style.pointerEvents = 'none';
+        lensContent.style.margin = '0';
+        lensContent.style.position = 'absolute';
+        lensContent.style.top = '0';
+        lensContent.style.left = '0';
+        lens.appendChild(lensContent);
+      }
+      // Scale and position the content so the area under the cursor is zoomed
+      const scale = zoom;
+      const offsetX = x * scale - lensSize / 2;
+      const offsetY = y * scale - lensSize / 2;
+      lensContent.style.transform = `scale(${scale})`;
+      lensContent.style.transformOrigin = 'top left';
+      lensContent.style.position = 'absolute';
+      lensContent.style.left = -offsetX + 'px';
+      lensContent.style.top = -offsetY + 'px';
+      lensContent.style.width = card.offsetWidth + 'px';
+      lensContent.style.height = card.offsetHeight + 'px';
     });
-    container.addEventListener('mouseleave', () => {
+    card.addEventListener('mouseleave', () => {
       lens.style.display = 'none';
+      if (lensContent) {
+        lensContent.remove();
+        lensContent = null;
+      }
     });
   }
-  document.querySelectorAll('.lens-img-container').forEach(lensEffect);
+  document.querySelectorAll('.project-lens-card').forEach(lensEffectCard);
 
   // Social links bounce on hover
   document.querySelectorAll('#contact a').forEach(link => {
@@ -309,5 +341,51 @@ document.addEventListener('DOMContentLoaded', () => {
       canvas.width = width;
       canvas.height = height;
     });
+  })();
+
+  // Progress bar and section highlight effect
+  (function sectionProgressAndHighlight() {
+    const progressBar = document.getElementById('progress-bar');
+    const sections = [
+      {id: 'hero', nav: 'Home'},
+      {id: 'about', nav: 'About'},
+      {id: 'skills', nav: 'Skills'},
+      {id: 'projects', nav: 'Projects'},
+      {id: 'testimonials', nav: 'Testimonials'},
+      {id: 'contact', nav: 'Contact'}
+    ];
+    const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = percent + '%';
+    }
+    function highlightSection() {
+      let current = 0;
+      for (let i = 0; i < sections.length; i++) {
+        const sec = document.getElementById(sections[i].id);
+        if (sec) {
+          const rect = sec.getBoundingClientRect();
+          if (rect.top <= 120) current = i;
+        }
+      }
+      navLinks.forEach((link, i) => {
+        if (i === current) {
+          link.classList.add('text-orange-400', 'font-bold', 'scale-110');
+          link.classList.remove('opacity-70');
+        } else {
+          link.classList.remove('text-orange-400', 'font-bold', 'scale-110');
+          link.classList.add('opacity-70');
+        }
+      });
+    }
+    window.addEventListener('scroll', () => {
+      updateProgress();
+      highlightSection();
+    });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+    highlightSection();
   })();
 });

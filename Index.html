@@ -13,6 +13,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body class="bg-black text-white font-mono pt-8">
+  <div id="progress-bar" class="fixed top-0 left-0 w-0 h-1.5 bg-gradient-to-r from-orange-400 to-orange-600 z-[9999] transition-all duration-200"></div>
   <nav class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur border-b border-zinc-800 shadow-lg">
     <div class="container mx-auto flex items-center justify-between px-4 py-3">
       <span class="text-xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Vedant Bobde</span>
@@ -86,7 +87,7 @@
   </section>
 
   <!-- About Section -->
-  <section id="about" class="py-16 bg-black">
+  <section id="about" class="py-16 bg-black/60 backdrop-blur-md rounded-2xl shadow-2xl border border-zinc-800 mx-2 my-8">
     <div class="container mx-auto flex flex-col md:flex-row items-center px-4 gap-8">
       <div class="flex-shrink-0 text-center mb-8 md:mb-0">
         <img src="https://placehold.co/200x200?text=Profile" alt="Vedant Bobde" class="w-48 h-48 rounded-full mx-auto object-cover border-4 border-orange-500 transition-transform duration-200 hover:scale-105 hover:shadow-2xl"/>
@@ -100,7 +101,7 @@
   </section>
 
   <!-- Core Skills Section -->
-  <section id="skills" class="py-16 bg-gradient-to-b from-black via-zinc-900 to-black">
+  <section id="skills" class="py-16 bg-zinc-900/60 backdrop-blur-md rounded-2xl shadow-2xl border border-zinc-800 mx-2 my-8">
     <div class="container mx-auto px-4">
       <h2 class="text-3xl font-bold text-center bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mb-10">Core Skills</h2>
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" id="skills-grid">
@@ -134,7 +135,7 @@
   </section>
 
   <!-- How I Work Section -->
-  <section id="how-i-work" class="py-20 bg-gradient-to-b from-black via-zinc-900 to-black section">
+  <section id="how-i-work" class="py-20 bg-black/50 backdrop-blur-md rounded-2xl shadow-2xl border border-zinc-800 mx-2 my-8">
     <div class="container mx-auto px-4">
       <h2 class="text-3xl md:text-4xl font-bold text-center text-gradient mb-14">How I Work</h2>
       <div class="relative max-w-2xl mx-auto">
@@ -178,16 +179,16 @@
   </section>
 
   <!-- Key Projects Section -->
-  <section id="projects" class="py-16 bg-zinc-950">
+  <section id="projects" class="py-16 bg-zinc-950/60 backdrop-blur-md rounded-2xl shadow-2xl border border-zinc-800 mx-2 my-8">
     <div class="container mx-auto px-4">
       <h2 class="text-3xl font-bold text-center bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mb-10">Key Projects</h2>
       <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
         <!-- Project 1 -->
         <div class="relative group project-lens-card overflow-hidden rounded-xl shadow-2xl border border-orange-500/20 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black p-0 transition-transform duration-300">
+          <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
           <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600 opacity-70 z-10"></div>
           <div class="relative lens-img-container cursor-zoom-in">
             <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80" alt="Order System" class="project-img block w-full h-48 object-cover transition-transform duration-300"/>
-            <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
           </div>
           <div class="p-6">
             <h3 class="text-2xl font-bold mb-2 text-gradient bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">E‑commerce Order Management System</h3>
@@ -199,10 +200,10 @@
         </div>
         <!-- Project 2 -->
         <div class="relative group project-lens-card overflow-hidden rounded-xl shadow-2xl border border-orange-500/20 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black p-0 transition-transform duration-300">
+          <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
           <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600 opacity-70 z-10"></div>
           <div class="relative lens-img-container cursor-zoom-in">
             <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80" alt="Wallet Integration" class="project-img block w-full h-48 object-cover transition-transform duration-300"/>
-            <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
           </div>
           <div class="p-6">
             <h3 class="text-2xl font-bold mb-2 text-gradient bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Fintech Wallet Integration</h3>
@@ -214,10 +215,10 @@
         </div>
         <!-- Project 3 -->
         <div class="relative group project-lens-card overflow-hidden rounded-xl shadow-2xl border border-orange-500/20 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black p-0 transition-transform duration-300">
+          <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
           <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600 opacity-70 z-10"></div>
           <div class="relative lens-img-container cursor-zoom-in">
             <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Healthcare Scheduler" class="project-img block w-full h-48 object-cover transition-transform duration-300"/>
-            <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
           </div>
           <div class="p-6">
             <h3 class="text-2xl font-bold mb-2 text-gradient bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Healthcare Appointment Scheduler</h3>
@@ -235,7 +236,7 @@
   </section>
 
   <!-- Testimonials Section -->
-  <section id="testimonials" class="py-20 bg-gradient-to-br from-zinc-900 via-black to-zinc-950 relative overflow-hidden">
+  <section id="testimonials" class="py-20 bg-black/50 backdrop-blur-md rounded-2xl shadow-2xl border border-zinc-800 mx-2 my-8 relative overflow-hidden">
     <div class="absolute inset-0 pointer-events-none">
       <div class="absolute -top-32 -left-32 w-96 h-96 bg-orange-500 opacity-10 rounded-full blur-3xl animate-pulse"></div>
       <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-orange-700 opacity-10 rounded-full blur-3xl animate-pulse"></div>

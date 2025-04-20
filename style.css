@@ -52,3 +52,101 @@
 .btn.glow:hover {
   box-shadow: 0 0 32px 8px #ff8a00ee;
 }
+
+@media (max-width: 768px) {
+  .project-lens-card {
+    padding: 0 !important;
+    border-radius: 1.2rem !important;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 24px #ff8a0033, 0 1.5px 8px #0008;
+    border: 1.5px solid #ff8a0030;
+    background: linear-gradient(135deg, #181818 60%, #2d1600 100%);
+    overflow: visible;
+    position: relative;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .project-lens-card .project-img {
+    height: 170px !important;
+    min-height: 120px;
+    max-height: 200px;
+    border-radius: 1.2rem 1.2rem 0 0 !important;
+    box-shadow: 0 2px 12px #ff8a0033;
+    object-fit: cover;
+    width: 100%;
+    margin-bottom: 0;
+    border-bottom: 1.5px solid #ff8a0030;
+  }
+  .project-lens-card .p-6 {
+    padding: 1.1rem 1rem 1.2rem 1rem !important;
+    background: transparent;
+  }
+  .project-lens-card h2, .project-lens-card h3 {
+    font-size: 1.15rem !important;
+    margin-bottom: 0.4rem !important;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .project-lens-card p, .project-lens-card .text-xs {
+    font-size: 0.98rem !important;
+    color: #ffe5c2;
+    margin-bottom: 0.5rem;
+  }
+  .project-lens-card .text-xs {
+    opacity: 0.95;
+  }
+  .project-lens-card .tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.7rem;
+  }
+  .project-lens-card .tech-badge {
+    background: linear-gradient(90deg, #ff8a00 60%, #e65c00 100%);
+    color: #fff;
+    font-size: 0.78rem;
+    font-family: inherit;
+    border-radius: 0.7rem;
+    padding: 0.18rem 0.7rem;
+    font-weight: 600;
+    box-shadow: 0 1px 4px #ff8a0033;
+    letter-spacing: 0.01em;
+  }
+  .project-lens-card .absolute.top-4.right-4 {
+    top: 0.5rem !important;
+    right: 0.5rem !important;
+    font-size: 0.7rem !important;
+    padding: 0.25rem 0.75rem !important;
+    border-radius: 0.7rem !important;
+    background: #ff8a00cc !important;
+    color: #fff !important;
+    box-shadow: 0 1px 6px #ff8a0033;
+  }
+  .project-lens-card .lens-effect {
+    width: 80px !important;
+    height: 80px !important;
+  }
+  .project-lens-card .project-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.7rem;
+    gap: 0.5rem;
+  }
+  .project-lens-card .project-link {
+    color: #ff8a00;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+  .project-lens-card .project-link:hover {
+    color: #fff;
+  }
+  .grid.md\:grid-cols-2.lg\:grid-cols-3 {
+    grid-template-columns: 1fr !important;
+  }
+  .container {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+}
