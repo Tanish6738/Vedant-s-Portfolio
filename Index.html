@@ -58,10 +58,9 @@
     <!-- Animated code/matrix background -->
     <div class="absolute inset-0 z-0 pointer-events-none">
       <canvas id="hero-matrix-bg" class="w-full h-full absolute inset-0"></canvas>
-      <div class="absolute -top-32 -left-32 w-96 h-96 bg-orange-500 opacity-20 rounded-full blur-3xl animate-pulse"></div>
-      <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-orange-700 opacity-20 rounded-full blur-3xl animate-pulse"></div>
+      <!-- Removed pulsating orange blobs -->
     </div>
-    <div class="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center gap-16 py-24">
+    <div class="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center gap-16 py-24 min-h-screen">
       <!-- Left: Text -->
       <div class="flex-1 text-center md:text-left flex flex-col items-center md:items-start">
         <h1 class="text-5xl md:text-7xl font-extrabold mb-4 bg-gradient-to-r from-white via-orange-200 to-orange-600 bg-clip-text text-transparent drop-shadow-lg tracking-tight flex items-center">
@@ -312,7 +311,20 @@
       </div>
     </div>
   </footer>
-  <div id="bg-3d" class="fixed inset-0 -z-10"></div>
+  <div id="bg-3d" class="fixed inset-0 -z-10">
+    <style>
+      @media (max-width: 640px) {
+        #bg-3d canvas {
+          width: 250px !important;
+          height: 250px !important;
+          left: 50% !important;
+          top: 50% !important;
+          transform: translate(-50%, -50%) !important;
+          position: absolute !important;
+        }
+      }
+    </style>
+  </div>
   <script src="script.js"></script>
   <script src="click-spark.js"></script>
 </body>
