@@ -9,8 +9,10 @@
   <!-- Add three.js and GSAP CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- Add GSAP ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
-<body class="bg-black text-white font-mono pt-20">
+<body class="bg-black text-white font-mono pt-8">
   <nav class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur border-b border-zinc-800 shadow-lg">
     <div class="container mx-auto flex items-center justify-between px-4 py-3">
       <span class="text-xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Vedant Bobde</span>
@@ -23,7 +25,7 @@
         <li><a href="#hero" class="nav-link hover:text-orange-400 transition">Home</a></li>
         <li><a href="#about" class="nav-link hover:text-orange-400 transition">About</a></li>
         <li><a href="#skills" class="nav-link hover:text-orange-400 transition">Skills</a></li>
-        <li><a href="project.html" class="nav-link hover:text-orange-400 transition">Projects</a></li>
+        <li><a href="#projects" class="nav-link hover:text-orange-400 transition">Projects</a></li>
         <li><a href="#testimonials" class="nav-link hover:text-orange-400 transition">Testimonials</a></li>
         <li><a href="#contact" class="nav-link hover:text-orange-400 transition">Contact</a></li>
       </ul>
@@ -37,16 +39,50 @@
       <li><a href="#contact" class="block py-3 nav-link hover:text-orange-400 transition">Contact</a></li>
     </ul>
   </nav>
-  <!-- Hero Section -->
-  <section id="hero" class="min-h-screen flex items-center justify-center text-center bg-gradient-to-br from-orange-500 to-orange-700 relative overflow-hidden">
-    <!-- Decorative blurred circles -->
-    <div class="absolute -top-32 -left-32 w-96 h-96 bg-orange-400 opacity-30 rounded-full blur-3xl animate-pulse"></div>
-    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-orange-700 opacity-30 rounded-full blur-3xl animate-pulse"></div>
-    <div class="container mx-auto px-4 relative z-10">
-      <h1 class="text-5xl md:text-7xl font-extrabold mb-4 bg-gradient-to-r from-white via-orange-200 to-orange-600 bg-clip-text text-transparent drop-shadow-lg tracking-tight animate__animated animate__fadeInDown">Vedant Bobde</h1>
-      <p class="text-2xl md:text-3xl mb-8 text-orange-100 font-medium animate__animated animate__fadeInUp animate__delay-1s">Building scalable backend systems</p>
-      <a href="#contact" class="inline-block px-10 py-4 bg-white/90 text-orange-700 font-bold rounded-full shadow-xl hover:bg-orange-100 hover:scale-110 active:scale-95 transition-transform duration-200 text-lg tracking-wide glow animate__animated animate__fadeInUp animate__delay-2s">Let’s Work Together!</a>
+  <!-- Terminal Overlay (hidden by default, shown on load) -->
+  <div id="terminal-overlay" class="fixed inset-0 flex items-center justify-center bg-black z-[100]" style="display:none;">
+    <div class="rounded-xl border border-zinc-700 bg-zinc-950 max-w-lg w-full shadow-2xl">
+      <div class="flex flex-col gap-y-2 border-b border-zinc-800 p-4">
+        <div class="flex flex-row gap-x-2">
+          <div class="h-2 w-2 rounded-full bg-red-500"></div>
+          <div class="h-2 w-2 rounded-full bg-yellow-500"></div>
+          <div class="h-2 w-2 rounded-full bg-green-500"></div>
+        </div>
+      </div>
+      <pre class="p-4 text-orange-200 text-left text-base font-mono whitespace-pre-wrap min-h-[60px]" id="terminal-text"></pre>
     </div>
+  </div>
+  <!-- Hero Section -->
+  <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-black via-zinc-900 to-black">
+    <!-- Animated code/matrix background -->
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <canvas id="hero-matrix-bg" class="w-full h-full absolute inset-0"></canvas>
+      <div class="absolute -top-32 -left-32 w-96 h-96 bg-orange-500 opacity-20 rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-orange-700 opacity-20 rounded-full blur-3xl animate-pulse"></div>
+    </div>
+    <div class="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center gap-16 py-24">
+      <!-- Left: Text -->
+      <div class="flex-1 text-center md:text-left flex flex-col items-center md:items-start">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-4 bg-gradient-to-r from-white via-orange-200 to-orange-600 bg-clip-text text-transparent drop-shadow-lg tracking-tight flex items-center">
+          Vedant Bobde
+          <span class="ml-2 w-2 h-10 bg-orange-400 animate-blink rounded-sm inline-block"></span>
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-orange-100 font-medium max-w-xl">Java Developer | Building scalable backend systems for fintech, e-commerce, and healthcare. Passionate about clean code, performance, and reliability.</p>
+        <a href="#contact" class="inline-block px-10 py-4 bg-gradient-to-r from-orange-400 to-orange-600 text-white font-bold rounded-full shadow-xl hover:scale-110 active:scale-95 transition-transform duration-200 text-lg tracking-wide glow focus:outline-none focus:ring-4 focus:ring-orange-500/40">Let’s Work Together!</a>
+      </div>
+      <!-- Right: Profile Image -->
+      <div class="flex-shrink-0 relative group">
+        <div class="absolute -inset-2 rounded-full bg-gradient-to-tr from-orange-400 via-orange-600 to-orange-700 opacity-60 blur-xl group-hover:scale-110 transition-transform duration-300"></div>
+        <img src="https://placehold.co/260x260?text=Vedant" alt="Vedant Bobde" class="w-64 h-64 rounded-full border-4 border-orange-400 shadow-2xl object-cover relative z-10 transition-transform duration-300 group-hover:scale-105 group-hover:shadow-[0_8px_40px_0_#ff8a00cc]"/>
+        <div class="absolute bottom-4 right-4 bg-zinc-900/80 text-orange-400 px-4 py-1 rounded-full text-xs font-mono shadow-lg border border-orange-500/40 animate-fade-in-up">#Java #SpringBoot</div>
+      </div>
+    </div>
+    <style>
+      @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+      .animate-blink { animation: blink 1s steps(1) infinite; }
+      @keyframes fade-in-up { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+      .animate-fade-in-up { animation: fade-in-up 1.2s cubic-bezier(.4,0,.2,1) both; }
+    </style>
   </section>
 
   <!-- About Section -->
@@ -67,24 +103,24 @@
   <section id="skills" class="py-16 bg-gradient-to-b from-black via-zinc-900 to-black">
     <div class="container mx-auto px-4">
       <h2 class="text-3xl font-bold text-center bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mb-10">Core Skills</h2>
-      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div class="bg-zinc-900/80 rounded-lg p-6 shadow">
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" id="skills-grid">
+        <div class="bg-zinc-900/80 rounded-lg p-6 shadow transition-transform duration-200 hover:scale-105 hover:shadow-2xl skill-card opacity-0 translate-y-8">
           <h3 class="font-semibold mb-2">Languages & Frameworks</h3>
           <p>Java, Java EE, Spring Boot, JPA, JAX‑RS</p>
         </div>
-        <div class="bg-zinc-900/80 rounded-lg p-6 shadow">
+        <div class="bg-zinc-900/80 rounded-lg p-6 shadow transition-transform duration-200 hover:scale-105 hover:shadow-2xl skill-card opacity-0 translate-y-8">
           <h3 class="font-semibold mb-2">Build & CI/CD</h3>
           <p>Maven, Gradle, Jenkins, GitHub Actions</p>
         </div>
-        <div class="bg-zinc-900/80 rounded-lg p-6 shadow">
+        <div class="bg-zinc-900/80 rounded-lg p-6 shadow transition-transform duration-200 hover:scale-105 hover:shadow-2xl skill-card opacity-0 translate-y-8">
           <h3 class="font-semibold mb-2">Databases</h3>
           <p>MySQL, PostgreSQL, MongoDB</p>
         </div>
-        <div class="bg-zinc-900/80 rounded-lg p-6 shadow">
+        <div class="bg-zinc-900/80 rounded-lg p-6 shadow transition-transform duration-200 hover:scale-105 hover:shadow-2xl skill-card opacity-0 translate-y-8">
           <h3 class="font-semibold mb-2">Cloud & Containerization</h3>
           <p>AWS (EC2, RDS), Docker, Apache Kafka</p>
         </div>
-        <div class="bg-zinc-900/80 rounded-lg p-6 shadow col-span-full">
+        <div class="bg-zinc-900/80 rounded-lg p-6 shadow transition-transform duration-200 hover:scale-105 hover:shadow-2xl skill-card opacity-0 translate-y-8 col-span-full">
           <h3 class="font-semibold mb-2">Specialties</h3>
           <ul class="list-disc list-inside space-y-1">
             <li>Microservices architecture</li>
@@ -97,71 +133,147 @@
     </div>
   </section>
 
-  <!-- Key Projects Section -->
-  <section id="projects" class="py-16 bg-zinc-950">
+  <!-- How I Work Section -->
+  <section id="how-i-work" class="py-20 bg-gradient-to-b from-black via-zinc-900 to-black section">
     <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mb-10">Key Projects</h2>
-      <!-- Project 1 -->
-      <div class="flex flex-col lg:flex-row items-center gap-8 mb-12">
-        <div class="flex-1">
-          <h3 class="text-xl font-semibold mb-2">⚙️ E‑commerce Order Management System</h3>
-          <ul class="mb-2 list-disc list-inside text-zinc-300">
-            <li><span class="font-bold">Role & Scope:</span> Architected a suite of Spring Boot microservices to manage orders, inventory, and payments.</li>
-            <li><span class="font-bold">Tech Stack:</span> Spring Boot, MySQL, Docker, AWS EC2</li>
-            <li><span class="font-bold">Impact:</span> Reduced order‑processing latency by 35% and scaled to handle 10,000+ daily orders.</li>
-          </ul>
-        </div>
-        <div class="flex-1 text-center">
-          <img src="https://placehold.co/300x200?text=Project+1" alt="Order System" class="rounded-lg shadow-lg mx-auto max-w-xs transition-transform duration-200 hover:scale-105 hover:shadow-2xl"/>
-        </div>
-      </div>
-      <!-- Project 2 -->
-      <div class="flex flex-col lg:flex-row-reverse items-center gap-8 mb-12">
-        <div class="flex-1">
-          <h3 class="text-xl font-semibold mb-2">💳 Fintech Wallet Integration</h3>
-          <ul class="mb-2 list-disc list-inside text-zinc-300">
-            <li><span class="font-bold">Role & Scope:</span> Built secure Java EE endpoints for a digital wallet integration in a banking app.</li>
-            <li><span class="font-bold">Tech Stack:</span> Java EE, JAX‑RS, JWT, PostgreSQL</li>
-            <li><span class="font-bold">Impact:</span> Onboarded over 50,000 users and maintained 99.9% uptime in the first quarter.</li>
-          </ul>
-        </div>
-        <div class="flex-1 text-center">
-          <img src="https://placehold.co/300x200?text=Project+2" alt="Wallet Integration" class="rounded-lg shadow-lg mx-auto max-w-xs transition-transform duration-200 hover:scale-105 hover:shadow-2xl"/>
-        </div>
-      </div>
-      <!-- Project 3 -->
-      <div class="flex flex-col lg:flex-row items-center gap-8 mb-12">
-        <div class="flex-1">
-          <h3 class="text-xl font-semibold mb-2">🩺 Healthcare Appointment Scheduler</h3>
-          <ul class="mb-2 list-disc list-inside text-zinc-300">
-            <li><span class="font-bold">Role & Scope:</span> Developed a real‑time scheduling backend using Spring and Kafka for doctor‑patient appointments.</li>
-            <li><span class="font-bold">Tech Stack:</span> Spring Boot, MongoDB, Apache Kafka</li>
-            <li><span class="font-bold">Impact:</span> Improved scheduling efficiency by 50%, supporting 10,000+ daily bookings.</li>
-          </ul>
-        </div>
-        <div class="flex-1 text-center">
-          <img src="https://placehold.co/300x200?text=Project+3" alt="Healthcare Scheduler" class="rounded-lg shadow-lg mx-auto max-w-xs transition-transform duration-200 hover:scale-105 hover:shadow-2xl"/>
+      <h2 class="text-3xl md:text-4xl font-bold text-center text-gradient mb-14">How I Work</h2>
+      <div class="relative max-w-2xl mx-auto">
+        <div class="absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-orange-500/80 to-orange-700/40 -translate-x-1/2 z-0"></div>
+        <div class="space-y-12 relative z-10">
+          <!-- Timeline Step 1 -->
+          <div class="timeline-step group flex items-center gap-6 fade-in opacity-0" style="animation-delay:0.1s">
+            <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-black font-bold shadow-lg border-4 border-zinc-900">1</div>
+            <div class="bg-zinc-900/90 rounded-lg p-6 shadow-lg border-l-4 border-orange-500 code-card transition-transform duration-200 group-hover:scale-105">
+              <h3 class="font-semibold text-lg mb-1 text-gradient">Understand Requirements</h3>
+              <p class="text-zinc-200">Deep dive into business needs, clarify goals, and define clear deliverables.</p>
+            </div>
+          </div>
+          <!-- Timeline Step 2 -->
+          <div class="timeline-step group flex items-center gap-6 fade-in opacity-0" style="animation-delay:0.3s">
+            <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-black font-bold shadow-lg border-4 border-zinc-900">2</div>
+            <div class="bg-zinc-900/90 rounded-lg p-6 shadow-lg border-l-4 border-orange-500 code-card transition-transform duration-200 group-hover:scale-105">
+              <h3 class="font-semibold text-lg mb-1 text-gradient">Design & Plan</h3>
+              <p class="text-zinc-200">Architect scalable solutions, select the right tech stack, and create a roadmap.</p>
+            </div>
+          </div>
+          <!-- Timeline Step 3 -->
+          <div class="timeline-step group flex items-center gap-6 fade-in opacity-0" style="animation-delay:0.5s">
+            <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-black font-bold shadow-lg border-4 border-zinc-900">3</div>
+            <div class="bg-zinc-900/90 rounded-lg p-6 shadow-lg border-l-4 border-orange-500 code-card transition-transform duration-200 group-hover:scale-105">
+              <h3 class="font-semibold text-lg mb-1 text-gradient">Code & Iterate</h3>
+              <p class="text-zinc-200">Write clean, testable code. Review, refactor, and iterate for quality and performance.</p>
+            </div>
+          </div>
+          <!-- Timeline Step 4 -->
+          <div class="timeline-step group flex items-center gap-6 fade-in opacity-0" style="animation-delay:0.7s">
+            <div class="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-black font-bold shadow-lg border-4 border-zinc-900">4</div>
+            <div class="bg-zinc-900/90 rounded-lg p-6 shadow-lg border-l-4 border-orange-500 code-card transition-transform duration-200 group-hover:scale-105">
+              <h3 class="font-semibold text-lg mb-1 text-gradient">Deliver & Support</h3>
+              <p class="text-zinc-200">Deploy, monitor, and provide ongoing support to ensure lasting value.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Testimonials Section -->
-  <section id="testimonials" class="py-16 bg-black">
-    <div class="container mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mb-10">Testimonials</h2>
-      <div class="grid gap-8 md:grid-cols-2">
-        <blockquote class="bg-zinc-900/80 rounded-lg p-6 border-l-4 border-orange-500 shadow text-left">
-          <p class="mb-4">“Vedant’s microservices expertise transformed our checkout flow—performance improvements were immediate.”</p>
-          <footer class="text-orange-300">— Team Lead, XYZ Tech</footer>
-        </blockquote>
-        <blockquote class="bg-zinc-900/80 rounded-lg p-6 border-l-4 border-orange-500 shadow text-left">
-          <p class="mb-4">“His clean code and proactive problem‑solving shaved weeks off our fintech integration timeline.”</p>
-          <footer class="text-orange-300">— Senior Developer, FinCore Labs</footer>
-        </blockquote>
+  <!-- Key Projects Section -->
+  <section id="projects" class="py-16 bg-zinc-950">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mb-10">Key Projects</h2>
+      <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+        <!-- Project 1 -->
+        <div class="relative group project-lens-card overflow-hidden rounded-xl shadow-2xl border border-orange-500/20 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black p-0 transition-transform duration-300">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600 opacity-70 z-10"></div>
+          <div class="relative lens-img-container cursor-zoom-in">
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80" alt="Order System" class="project-img block w-full h-48 object-cover transition-transform duration-300"/>
+            <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-2xl font-bold mb-2 text-gradient bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">E‑commerce Order Management System</h3>
+            <p class="mb-2 text-zinc-200">Architected a suite of Spring Boot microservices to manage orders, inventory, and payments.</p>
+            <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Tech Stack:</span> Spring Boot, MySQL, Docker, AWS EC2</div>
+            <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Impact:</span> Reduced order‑processing latency by 35% and scaled to handle 10,000+ daily orders.</div>
+            <span class="absolute top-4 right-4 bg-orange-500/90 text-white text-xs font-mono px-3 py-1 rounded-full shadow-lg animate-fade-in-up">#Microservices</span>
+          </div>
+        </div>
+        <!-- Project 2 -->
+        <div class="relative group project-lens-card overflow-hidden rounded-xl shadow-2xl border border-orange-500/20 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black p-0 transition-transform duration-300">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600 opacity-70 z-10"></div>
+          <div class="relative lens-img-container cursor-zoom-in">
+            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80" alt="Wallet Integration" class="project-img block w-full h-48 object-cover transition-transform duration-300"/>
+            <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-2xl font-bold mb-2 text-gradient bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Fintech Wallet Integration</h3>
+            <p class="mb-2 text-zinc-200">Built secure Java EE endpoints for a digital wallet integration in a banking app.</p>
+            <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Tech Stack:</span> Java EE, JAX‑RS, JWT, PostgreSQL</div>
+            <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Impact:</span> Onboarded over 50,000 users and maintained 99.9% uptime in the first quarter.</div>
+            <span class="absolute top-4 right-4 bg-orange-500/90 text-white text-xs font-mono px-3 py-1 rounded-full shadow-lg animate-fade-in-up">#Fintech</span>
+          </div>
+        </div>
+        <!-- Project 3 -->
+        <div class="relative group project-lens-card overflow-hidden rounded-xl shadow-2xl border border-orange-500/20 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black p-0 transition-transform duration-300">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-orange-600 opacity-70 z-10"></div>
+          <div class="relative lens-img-container cursor-zoom-in">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Healthcare Scheduler" class="project-img block w-full h-48 object-cover transition-transform duration-300"/>
+            <div class="lens-effect absolute inset-0 pointer-events-none" style="display:none;"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-2xl font-bold mb-2 text-gradient bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">Healthcare Appointment Scheduler</h3>
+            <p class="mb-2 text-zinc-200">Developed a real‑time scheduling backend using Spring and Kafka for doctor‑patient appointments.</p>
+            <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Tech Stack:</span> Spring Boot, MongoDB, Apache Kafka</div>
+            <div class="mb-2 text-xs text-zinc-400 flex items-center gap-2"><span class="font-semibold text-orange-400">Impact:</span> Improved scheduling efficiency by 50%, supporting 10,000+ daily bookings.</div>
+            <span class="absolute top-4 right-4 bg-orange-500/90 text-white text-xs font-mono px-3 py-1 rounded-full shadow-lg animate-fade-in-up">#Healthcare</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-center mt-12">
+        <a href="project.html" class="inline-block px-8 py-3 bg-gradient-to-r from-orange-400 to-orange-600 text-white font-bold rounded-full shadow-xl hover:scale-105 active:scale-95 transition-transform duration-200 text-lg tracking-wide glow focus:outline-none focus:ring-4 focus:ring-orange-500/40">See All Projects</a>
       </div>
     </div>
   </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="py-20 bg-gradient-to-br from-zinc-900 via-black to-zinc-950 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute -top-32 -left-32 w-96 h-96 bg-orange-500 opacity-10 rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-orange-700 opacity-10 rounded-full blur-3xl animate-pulse"></div>
+    </div>
+    <div class="container mx-auto px-4 relative z-10">
+      <h2 class="text-4xl font-extrabold text-center bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mb-14 drop-shadow-lg">Testimonials</h2>
+      <div class="max-w-3xl mx-auto">
+        <div class="flex flex-col md:flex-row gap-8 justify-center items-stretch">
+          <!-- Testimonial 1 -->
+          <div class="flex-1 bg-zinc-900/90 rounded-2xl shadow-2xl border border-orange-500/30 p-8 flex flex-col items-center text-center hover:scale-105 transition-transform duration-200">
+            <div class="mb-4">
+              <img src="https://placehold.co/64x64?text=TL" alt="Team Lead" class="w-16 h-16 rounded-full border-2 border-orange-400 shadow-md mx-auto"/>
+            </div>
+            <div class="text-5xl text-orange-400 mb-2 leading-none">“</div>
+            <p class="mb-4 text-lg text-zinc-100 font-medium">Vedant’s microservices expertise transformed our checkout flow—performance improvements were immediate.</p>
+            <footer class="text-orange-300 font-semibold">— Team Lead, XYZ Tech</footer>
+          </div>
+          <!-- Testimonial 2 -->
+          <div class="flex-1 bg-zinc-900/90 rounded-2xl shadow-2xl border border-orange-500/30 p-8 flex flex-col items-center text-center hover:scale-105 transition-transform duration-200">
+            <div class="mb-4">
+              <img src="https://placehold.co/64x64?text=SD" alt="Senior Developer" class="w-16 h-16 rounded-full border-2 border-orange-400 shadow-md mx-auto"/>
+            </div>
+            <div class="text-5xl text-orange-400 mb-2 leading-none">“</div>
+            <p class="mb-4 text-lg text-zinc-100 font-medium">His clean code and proactive problem‑solving shaved weeks off our fintech integration timeline.</p>
+            <footer class="text-orange-300 font-semibold">— Senior Developer, FinCore Labs</footer>
+          </div>
+        </div>
+        <!-- Carousel dots (static for now) -->
+        <div class="flex justify-center gap-2 mt-8">
+          <span class="w-3 h-3 bg-orange-400 rounded-full inline-block"></span>
+          <span class="w-3 h-3 bg-zinc-700 rounded-full inline-block"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <style>
+    /* Remove old marquee animation */
+  </style>
 
   <!-- Contact Section -->
   <section id="contact" class="py-16 bg-zinc-950">
@@ -201,5 +313,6 @@
   </footer>
   <div id="bg-3d" class="fixed inset-0 -z-10"></div>
   <script src="script.js"></script>
+  <script src="click-spark.js"></script>
 </body>
 </html>
