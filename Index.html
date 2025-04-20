@@ -71,6 +71,146 @@
   <style>
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    @media (max-width: 768px) {
+      #hero .container {
+        flex-direction: column !important;
+        gap: 2.5rem !important;
+        padding: 1.2rem 0.2rem !important;
+      }
+      #hero h1 {
+        font-size: 2.1rem !important;
+        line-height: 2.5rem !important;
+      }
+      #hero p {
+        font-size: 1.05rem !important;
+        margin-bottom: 1.2rem !important;
+      }
+      #hero .w-64.h-64 {
+        width: 140px !important;
+        height: 140px !important;
+        min-width: 120px;
+        min-height: 120px;
+      }
+      #hero .border-2 {
+        border-width: 1.5px !important;
+      }
+      #hero .px-4, #hero .py-4 {
+        padding-left: 0.7rem !important;
+        padding-right: 0.7rem !important;
+        padding-top: 0.7rem !important;
+        padding-bottom: 0.7rem !important;
+      }
+      #hero .rounded-xl {
+        border-radius: 1rem !important;
+      }
+      #hero .min-h-screen {
+        min-height: 80vh !important;
+      }
+      #hero .gap-16 {
+        gap: 1.5rem !important;
+      }
+      #hero .py-24 {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+      }
+      #hero .absolute.bottom-4.right-4 {
+        bottom: 0.5rem !important;
+        right: 0.5rem !important;
+        font-size: 0.7rem !important;
+        padding: 0.25rem 0.75rem !important;
+        border-radius: 0.7rem !important;
+      }
+      #about .container, #skills .container {
+        flex-direction: column !important;
+        gap: 2rem !important;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+      }
+      #about .w-48.h-48 {
+        width: 110px !important;
+        height: 110px !important;
+      }
+      #about h2, #skills h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 0.7rem !important;
+      }
+      #about p, #skills p, #skills li {
+        font-size: 1rem !important;
+      }
+      #skills .grid {
+        grid-template-columns: 1fr !important;
+      }
+      #skills .p-6 {
+        padding: 1rem !important;
+      }
+      #skills .col-span-full {
+        grid-column: span 1 / span 1 !important;
+      }
+      #how-i-work .max-w-2xl {
+        max-width: 100% !important;
+      }
+      #how-i-work .timeline-step {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.7rem !important;
+      }
+      #how-i-work .w-8.h-8 {
+        width: 2rem !important;
+        height: 2rem !important;
+        font-size: 1rem !important;
+      }
+      #how-i-work h3 {
+        font-size: 1.1rem !important;
+      }
+      #how-i-work p {
+        font-size: 0.98rem !important;
+      }
+      #testimonials .flex.md\:flex-row {
+        flex-direction: column !important;
+        gap: 1.5rem !important;
+      }
+      #testimonials .p-8 {
+        padding: 1.2rem !important;
+      }
+      #testimonials h2 {
+        font-size: 1.5rem !important;
+      }
+      #testimonials p {
+        font-size: 1rem !important;
+      }
+      #contact .max-w-md {
+        max-width: 100% !important;
+      }
+      #contact h2 {
+        font-size: 1.5rem !important;
+      }
+      #contact p, #contact label, #contact button {
+        font-size: 1rem !important;
+      }
+      #contact .p-6 {
+        padding: 1rem !important;
+      }
+      #contact .flex.gap-6 {
+        gap: 1.2rem !important;
+        flex-wrap: wrap;
+      }
+      nav .container {
+        flex-direction: row !important;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+      }
+      nav .text-xl {
+        font-size: 1.1rem !important;
+      }
+      nav .w-8.h-8 {
+        width: 2rem !important;
+        height: 2rem !important;
+      }
+      nav ul#nav-menu {
+        gap: 1.2rem !important;
+        font-size: 1rem !important;
+      }
+    }
   </style>
   <!-- Hero Section -->
   <section id="hero" class="min-h-screen border-2 border-orange-400flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-black via-zinc-900 to-black">
@@ -81,7 +221,7 @@
     </div>
     <div class="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center gap-16 py-24 min-h-screen">
       <!-- Left: Text -->
-      <div class="py-4 px-4 flex-1 text-center justify-center border-2 border-orange-400 rounded bg-black/80 backdrop-blur-md md:text-left flex flex-col items-center md:items-start">
+      <div class="py-4 px-4 flex-1 text-center justify-center md:text-left flex flex-col items-center md:items-start border-2 border-gray-400 rounded-xl bg-black/80 backdrop-blur-md ">
         <h1 class="text-5xl md:text-7xl font-extrabold mb-4 bg-gradient-to-r from-white via-orange-200 to-orange-600 bg-clip-text text-transparent drop-shadow-lg tracking-tight flex items-center">
           Vedant Bobde
           <span class="ml-2 w-2 h-10 bg-orange-400 animate-blink rounded-sm inline-block"></span>
