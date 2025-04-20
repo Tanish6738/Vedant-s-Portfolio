@@ -1,17 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Remove manual scroll reveal logic (no longer needed with ScrollTrigger)
-  // const sections = document.querySelectorAll('section');
-  // const revealSection = (section) => {
-  //   const rect = section.getBoundingClientRect();
-  //   if (rect.top < window.innerHeight - 100) {
-  //     section.classList.add('fade-in');
-  //   }
-  // };
-  // sections.forEach(section => {
-  //   revealSection(section);
-  //   window.addEventListener('scroll', () => revealSection(section));
-  // });
-
   // Section shadow and border for visual separation
   ['hero','about','skills','projects','testimonials','contact'].forEach(id => {
     const section = document.getElementById(id);
@@ -59,52 +46,283 @@ document.addEventListener('DOMContentLoaded', () => {
   const ctaBtn = document.querySelector('a[href="#contact"]');
   if (ctaBtn) ctaBtn.classList.add('glow');
 
-  // Terminal intro effect before hero reveal
+  // Enhanced Terminal intro effect before hero reveal
   const terminalOverlay = document.getElementById('terminal-overlay');
   const terminalText = document.getElementById('terminal-text');
+  const terminalCursor = document.getElementById('cursor');
+  const terminalProgress = document.getElementById('terminal-progress');
+  const terminalProgressBar = document.getElementById('terminal-progress-bar');
+  const terminalProgressText = document.getElementById('terminal-progress-text');
+  const terminalInputContainer = document.getElementById('terminal-input-container');
+  const terminalInput = document.getElementById('terminal-input');
   const heroSection = document.getElementById('hero');
+
   if (terminalOverlay && terminalText && heroSection) {
     // Hide hero initially
     heroSection.style.opacity = '0';
     heroSection.style.pointerEvents = 'none';
     heroSection.style.visibility = 'hidden';
+    
+    // Display terminal
     terminalOverlay.style.display = 'flex';
     terminalOverlay.style.opacity = '1';
-    const lines = [
-      "Welcome to Vedant Bobde's Portfolio",
-      'Initializing backend wizardry... ⚡',
-      'Loading Main Content...'
+    
+    // Terminal sequences - structured as objects for better organization
+    const sequences = [
+      // Shorter welcome message
+      {
+        type: 'text',
+        lines: [
+          "Welcome to Vedant Bobde's Portfolio",
+          "Initializing...",
+          "Date: " + new Date().toLocaleDateString(),
+        ],
+        typingSpeed: 25,
+        delayAfter: 400
+      },
+      // Only one system check
+      {
+        type: 'command',
+        command: "java --version",
+        response: [
+          "openjdk 21.0.2 2024-04-16"
+        ],
+        delayAfter: 500
+      },
+      // Progress sequence - loading
+      {
+        type: 'progress',
+        title: "Loading portfolio...",
+        duration: 1200,
+        delayAfter: 200
+      },
+      // Final confirmation and launch
+      {
+        type: 'text',
+        lines: [
+          "Ready! Launching portfolio..."
+        ],
+        typingSpeed: 30,
+        delayAfter: 400
+      }
     ];
-    let line = 0;
-    let char = 0;
-    terminalText.textContent = '';
-    function typeLine() {
-      if (line < lines.length) {
-        if (char < lines[line].length) {
-          terminalText.textContent += lines[line][char];
-          char++;
-          setTimeout(typeLine, 28);
-        } else {
-          terminalText.textContent += '\n';
-          line++;
-          char = 0;
-          setTimeout(typeLine, 400);
-        }
-      } else {
-        setTimeout(() => {
-          gsap.to(terminalOverlay, { opacity: 0, duration: 0.7, onComplete: () => {
-            terminalOverlay.style.display = 'none';
-          }});
-          gsap.to(heroSection, { opacity: 1, duration: 0.9, delay: 0.2, onStart: () => {
-            heroSection.style.pointerEvents = 'auto';
-            heroSection.style.visibility = 'visible';
-            // Trigger hero reveal animation if any
-            if (typeof window.heroRevealEffect === 'function') window.heroRevealEffect();
-          }});
-        }, 700);
+
+    let currentSequence = 0;
+    let currentLine = 0;
+    let currentChar = 0;
+    let currentContent = '';
+    let waitingForInput = false;
+
+    const terminalContentContainer = terminalText.parentElement;
+
+    function scrollTerminalToBottom() {
+      if (terminalContentContainer) {
+        terminalContentContainer.scrollTop = terminalContentContainer.scrollHeight;
       }
     }
-    typeLine();
+
+    // Position cursor function
+    function positionCursor() {
+      const textRect = terminalText.getBoundingClientRect();
+      const textContent = terminalText.textContent;
+      const lines = textContent.split('\n');
+      const lastLine = lines[lines.length - 1] || '';
+      
+      // Create a temp span to measure text width
+      const tempSpan = document.createElement('span');
+      tempSpan.style.font = window.getComputedStyle(terminalText).font;
+      tempSpan.style.visibility = 'hidden';
+      tempSpan.style.position = 'absolute';
+      tempSpan.textContent = lastLine;
+      document.body.appendChild(tempSpan);
+      
+      const width = tempSpan.offsetWidth;
+      document.body.removeChild(tempSpan);
+      
+      // Position cursor at end of text
+      const lineHeight = parseInt(window.getComputedStyle(terminalText).lineHeight);
+      const top = terminalText.offsetTop + (lines.length - 1) * (lineHeight || 24);
+      
+      terminalCursor.style.top = `${top}px`;
+      terminalCursor.style.left = `${terminalText.offsetLeft + width + 8}px`;
+    }
+
+    // Type text function
+    function typeText() {
+      const sequence = sequences[currentSequence];
+      
+      // Handle different sequence types
+      if (sequence.type === 'text') {
+        if (currentLine < sequence.lines.length) {
+          if (currentChar < sequence.lines[currentLine].length) {
+            currentContent += sequence.lines[currentLine][currentChar];
+            terminalText.textContent = currentContent;
+            currentChar++;
+            positionCursor();
+            scrollTerminalToBottom();
+            setTimeout(typeText, sequence.typingSpeed);
+          } else {
+            currentContent += '\n';
+            terminalText.textContent = currentContent;
+            currentLine++;
+            currentChar = 0;
+            positionCursor();
+            scrollTerminalToBottom();
+            setTimeout(typeText, 100);
+          }
+        } else {
+          // Move to next sequence
+          currentSequence++;
+          currentLine = 0;
+          currentChar = 0;
+          setTimeout(processSequence, sequence.delayAfter || 500);
+        }
+      } else if (sequence.type === 'command') {
+        // Display command with prompt
+        currentContent += '$ ' + sequence.command + '\n';
+        terminalText.textContent = currentContent;
+        positionCursor();
+        scrollTerminalToBottom();
+        
+        // After a delay, show command response
+        setTimeout(() => {
+          sequence.response.forEach(line => {
+            currentContent += line + '\n';
+          });
+          terminalText.textContent = currentContent;
+          positionCursor();
+          scrollTerminalToBottom();
+          
+          // Move to next sequence
+          currentSequence++;
+          setTimeout(processSequence, sequence.delayAfter || 500);
+        }, 500);
+      } else if (sequence.type === 'progress') {
+        // Show progress bar
+        currentContent += sequence.title + '\n';
+        terminalText.textContent = currentContent;
+        terminalProgress.classList.remove('hidden');
+        positionCursor();
+        scrollTerminalToBottom();
+        
+        // Animate progress bar
+        let progress = 0;
+        const interval = 30;
+        const increment = interval / sequence.duration * 100;
+        
+        const progressInterval = setInterval(() => {
+          progress += increment;
+          if (progress >= 100) {
+            progress = 100;
+            clearInterval(progressInterval);
+            
+            setTimeout(() => {
+              terminalProgress.classList.add('hidden');
+              currentContent += 'Complete! [100%]\n\n';
+              terminalText.textContent = currentContent;
+              positionCursor();
+              scrollTerminalToBottom();
+              
+              // Move to next sequence
+              currentSequence++;
+              setTimeout(processSequence, sequence.delayAfter || 500);
+            }, 200);
+          }
+          
+          terminalProgressBar.style.width = `${progress}%`;
+          terminalProgressText.textContent = `${Math.round(progress)}%`;
+        }, interval);
+      } else if (sequence.type === 'input') {
+        // Show input prompt
+        currentContent += '$ ' + sequence.prompt + '\n';
+        terminalText.textContent = currentContent;
+        terminalInputContainer.classList.remove('hidden');
+        terminalInput.focus();
+        waitingForInput = true;
+        positionCursor();
+        scrollTerminalToBottom();
+        
+        // Handle autocomplete if specified
+        if (sequence.autoComplete) {
+          setTimeout(() => {
+            if (waitingForInput) { // Only autocomplete if still waiting for input
+              terminalInput.value = sequence.autoComplete;
+              setTimeout(() => {
+                handleInput();
+              }, 500);
+            }
+          }, sequence.autoCompleteDelay || 1500);
+        }
+        
+        // Handle input submission
+        terminalInput.addEventListener('keydown', function inputHandler(e) {
+          if (e.key === 'Enter') {
+            handleInput();
+            terminalInput.removeEventListener('keydown', inputHandler);
+          }
+        });
+        
+        function handleInput() {
+          const userInput = terminalInput.value.trim();
+          waitingForInput = false;
+          terminalInputContainer.classList.add('hidden');
+          
+          // Show user input in terminal
+          currentContent += userInput + '\n\n';
+          terminalText.textContent = currentContent;
+          positionCursor();
+          scrollTerminalToBottom();
+          
+          // Move to next sequence
+          currentSequence++;
+          setTimeout(processSequence, sequence.delayAfter || 500);
+        }
+      }
+    }
+
+    // Process current sequence
+    function processSequence() {
+      if (currentSequence < sequences.length) {
+        const sequence = sequences[currentSequence];
+        
+        // Branch based on sequence type
+        if (sequence.type === 'text') {
+          typeText();
+        } else if (sequence.type === 'command') {
+          typeText();
+        } else if (sequence.type === 'progress') {
+          typeText();
+        } else if (sequence.type === 'input') {
+          typeText();
+        }
+      } else {
+        // All sequences complete, fade out terminal and show hero
+        setTimeout(() => {
+          gsap.to(terminalOverlay, { 
+            opacity: 0, 
+            duration: 0.7, 
+            onComplete: () => {
+              terminalOverlay.style.display = 'none';
+            }
+          });
+          
+          gsap.to(heroSection, { 
+            opacity: 1, 
+            duration: 0.9, 
+            delay: 0.2, 
+            onStart: () => {
+              heroSection.style.pointerEvents = 'auto';
+              heroSection.style.visibility = 'visible';
+              // Trigger hero reveal animation if any
+              if (typeof window.heroRevealEffect === 'function') window.heroRevealEffect();
+            }
+          });
+        }, 500);
+      }
+    }
+
+    // Start the terminal sequence
+    processSequence();
   }
 
   // Use GSAP ScrollTrigger for section reveal
