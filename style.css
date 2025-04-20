@@ -124,6 +124,10 @@
   .project-lens-card .lens-effect {
     width: 80px !important;
     height: 80px !important;
+    display: none !important;
+  }
+  .project-lens-card .lens-img-container {
+    cursor: default !important;
   }
   .project-lens-card .project-footer {
     display: flex;

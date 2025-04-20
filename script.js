@@ -167,9 +167,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Welcoming animation for hero section
   const hero = document.getElementById('hero');
   if (hero) {
-    gsap.fromTo(hero.querySelector('h1'), { y: -60, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.2 });
-    gsap.fromTo(hero.querySelector('p'), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.6 });
-    gsap.fromTo(hero.querySelector('a'), { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: 'back.out(1.7)', delay: 1 });
+    gsap.fromTo(hero.querySelector('h1'), { y: -60, opacity: 0 }, { y: 0, opacity: 1, duration: 5.8, ease: 'power3.out', delay: 0.2 });
+    gsap.fromTo(hero.querySelector('p'), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 5.8, ease: 'power3.out', delay: 0.7 });
+    gsap.fromTo(hero.querySelector('a'), { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 5.2, ease: 'back.out(1.7)', delay: 1.2 });
   }
 
   // Interactive hover for project cards
@@ -187,11 +187,21 @@ document.addEventListener('DOMContentLoaded', () => {
   function lensEffectCard(card) {
     const lens = card.querySelector('.lens-effect');
     if (!lens) return;
+    
+    // Skip applying lens effect on mobile devices
+    if (window.innerWidth <= 768) {
+      lens.style.display = 'none';
+      return;
+    }
+    
     const zoom = 1.6;
     const lensSize = 160;
     let lensContent = null;
 
     card.addEventListener('mousemove', (e) => {
+      // Skip lens effect if viewport width is mobile size
+      if (window.innerWidth <= 768) return;
+      
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -245,6 +255,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   document.querySelectorAll('.project-lens-card').forEach(lensEffectCard);
+
+  // Also update when window is resized
+  window.addEventListener('resize', () => {
+    if (window.innerWidth <= 768) {
+      document.querySelectorAll('.lens-effect').forEach(lens => {
+        lens.style.display = 'none';
+      });
+    }
+  });
 
   // Social links bounce on hover
   document.querySelectorAll('#contact a').forEach(link => {
